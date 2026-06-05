@@ -20,10 +20,10 @@ social:
 home_top:
   enable: true
   timemode: date
-  title: rainer的blog
+  title: lyx919的blog
   subTitle: 记录技术，分享生活。
   siteText: github.com/lyx919777
-  default_descr: 欢迎来到 rainer 的博客！
+  default_descr: 欢迎来到 lyx919 的博客！
 
 # 作者信息
 author_status:
