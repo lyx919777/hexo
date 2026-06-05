@@ -8,14 +8,34 @@ if "%1"=="" (
   set msg=%*
 )
 
-echo === 添加所有更改 ===
+echo ==============================
+echo    Hexo 一键部署脚本
+echo ==============================
+
+echo.
+echo [1/4] 构建博客...
+call hexo generate
+if %errorlevel% neq 0 (
+  echo 构建失败！请检查错误信息。
+  pause
+  exit /b 1
+)
+
+echo.
+echo [2/4] 添加所有更改...
 git add .
 
-echo === 提交更改 ===
+echo.
+echo [3/4] 提交更改...
 git commit -m "%msg%"
 
-echo === 推送到 GitHub ===
+echo.
+echo [4/4] 推送到 GitHub...
 git push origin main
 
-echo === 完成！=== 
+echo.
+echo ==============================
+echo    ✅ 上传完成！
+echo    http://github.com/lyx919777/hexo
+echo ==============================
 pause
