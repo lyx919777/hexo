@@ -43,8 +43,8 @@ render_drafts: false
 post_asset_folder: false
 relative_link: false
 future: true
-# 语法高亮由 ShokaX 主题的 hexo-renderer-aether 处理
-syntax_highlighter: false
+# 语法高亮由主题自行处理
+# syntax_highlighter: false
 
 # Home page setting
 # path: Root path for your blogs index page. (default = '')
@@ -84,24 +84,10 @@ include:
 exclude:
 ignore:
 
-# RSS & Feed (ShokaX 推荐)
-rss:
-  enable: true
-  template: "node_modules/hexo-theme-shokax/layout/_alternate/rss.ejs"
-  output: "rss.xml"
-atom:
-  enable: true
-  template: "node_modules/hexo-theme-shokax/layout/_alternate/atom.ejs"
-  output: "atom.xml"
-jsonFeed:
-  enable: true
-  template: "node_modules/hexo-theme-shokax/layout/_alternate/json.ejs"
-  output: "feed.json"
-
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: shokax
+theme: anzhiyu
 
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
