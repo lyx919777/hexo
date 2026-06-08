@@ -23,6 +23,22 @@ home_top:
   title: lyx919的blog
   subTitle: 记录技术，分享生活。
   siteText: github.com/lyx919777
+  category:
+    - name: OI
+      path: /categories/OI/
+      shadow: var(--anzhiyu-shadow-blue)
+      class: blue
+      icon: anzhiyu-icon-code
+    - name: 开发
+      path: /categories/开发/
+      shadow: var(--anzhiyu-shadow-purple)
+      class: purple
+      icon: anzhiyu-icon-laptop-code
+    - name: 生活
+      path: /categories/生活/
+      shadow: var(--anzhiyu-shadow-green)
+      class: green
+      icon: anzhiyu-icon-book
   default_descr: 欢迎来到 lyx919 的博客！
 
 # 作者信息

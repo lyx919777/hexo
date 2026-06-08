@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blog Manager - lyx919的blog</title>
+<style>
+  :root {
+    --primary: #425AEF;
+    --bg: #f5f7fa;
+    --card: #fff;
+    --text: #1a1a2e;
+    --border: #e8ecf4;
+    --success: #52c41a;
+    --warning: #faad14;
+    --danger: #ff4d4f;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, "Microsoft YaHei", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    padding: 20px;
+    min-height: 100vh;
+  }
+  .container { max-width: 1000px; margin: 0 auto; }
+  h1 {
+    font-size: 28px;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  h1 small { font-size: 14px; color: #888; font-weight: normal; }
+  .subtitle { color: #888; margin-bottom: 24px; font-size: 14px; }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-bottom: 24px; }
+  .card {
+    background: var(--card);
+    border-radius: 12px;
+    padding: 20px;
+    border: 1px solid var(--border);
+    text-align: center;
+    transition: all 0.2s;
+    cursor: pointer;
+  }
+  .card:hover { transform: translateY(-2px); box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+  .card .icon { font-size: 32px; margin-bottom: 8px; }
+  .card .name { font-size: 14px; font-weight: 600; }
+  .card .desc { font-size: 12px; color: #999; margin-top: 4px; }
+
+  .section { background: var(--card); border-radius: 12px; border: 1px solid var(--border); margin-bottom: 20px; overflow: hidden; }
+  .section-header {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border);
+    font-weight: 600;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .section-body { padding: 16px 20px; }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 18px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    transition: all 0.2s;
+  }
+  .btn-primary { background: var(--primary); color: #fff; }
+  .btn-primary:hover { opacity: 0.9; transform: translateY(-1px); }
+  .btn-success { background: var(--success); color: #fff; }
+  .btn-warning { background: var(--warning); color: #fff; }
+  .btn-danger { background: var(--danger); color: #fff; }
+  .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--text); }
+  .btn-outline:hover { border-color: var(--primary); color: var(--primary); }
+  .btn-sm { padding: 5px 12px; font-size: 12px; }
+
+  .input-group { display: flex; gap: 10px; margin-bottom: 12px; }
+  .input-group input, .input-group textarea {
+    flex: 1;
+    padding: 10px 14px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 14px;
+    outline: none;
+    font-family: inherit;
+  }
+  .input-group input:focus, .input-group textarea:focus { border-color: var(--primary); }
+  .input-group textarea { resize: vertical; min-height: 60px; }
+
+  #log {
+    background: #1a1a2e;
+    color: #0f0;
+    padding: 16px;
+    border-radius: 8px;
+    font-family: "Fira Code", monospace;
+    font-size: 13px;
+    line-height: 1.6;
+    max-height: 300px;
+    overflow-y: auto;
+    white-space: pre-wrap;
+    word-break: break-all;
+  }
+  #log .info { color: #0f0; }
+  #log .error { color: #ff4d4f; }
+  #log .warn { color: #faad14; }
+
+  .status-dot {
+    display: inline-block;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    margin-right: 6px;
+  }
+  .status-dot.running { background: #52c41a; }
+  .status-dot.stopped { background: #ff4d4f; }
+
+  .flex { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  table th { text-align: left; padding: 10px 12px; border-bottom: 2px solid var(--border); color: #888; font-weight: 600; }
+  table td { padding: 10px 12px; border-bottom: 1px solid var(--border); }
+  table tr:last-child td { border-bottom: none; }
+  table tr:hover td { background: #f8f9ff; }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>
+    📝 Blog Manager
+    <small>lyx919的blog</small>
+  </h1>
+  <div class="subtitle">本地博客管理面板 · D:\hexo</div>
+
+  <!-- 快捷操作 -->
+  <div class="grid">
+    <div class="card" onclick="runCmd('deploy')">
+      <div class="icon">🚀</div>
+      <div class="name">一键部署</div>
+      <div class="desc">构建 + 提交 + 推送</div>
+    </div>
+    <div class="card" onclick="runCmd('build')">
+      <div class="icon">🔨</div>
+      <div class="name">构建</div>
+      <div class="desc">hexo generate</div>
+    </div>
+    <div class="card" onclick="runCmd('server')">
+      <div class="icon">🌐</div>
+      <div class="name">启动服务器</div>
+      <div class="desc">本地预览</div>
+    </div>
+    <div class="card" onclick="runCmd('stop')">
+      <div class="icon">⏹</div>
+      <div class="name">停止服务器</div>
+      <div class="desc">关闭本地服务</div>
+    </div>
+    <div class="card" onclick="runCmd('preview')">
+      <div class="icon">👁</div>
+      <div class="name">打开预览</div>
+      <div class="desc">浏览器查看</div>
+    </div>
+  </div>
+
+  <!-- 新建文章 -->
+  <div class="section">
+    <div class="section-header">✏️ 新建文章</div>
+    <div class="section-body">
+      <div class="input-group">
+        <input type="text" id="postTitle" placeholder="文章标题（必填）" />
+      </div>
+      <div class="input-group">
+        <textarea id="postTags" placeholder="标签（用逗号分隔，如：OI, 算法）" rows="1"></textarea>
+      </div>
+      <div>
+        <button class="btn btn-primary" onclick="newPost()">创建文章</button>
+        <span style="color:#888;font-size:12px;margin-left:12px;">将在 source/_posts/ 下生成 .md 文件</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 已有文章 -->
+  <div class="section">
+    <div class="section-header">
+      <span>📄 已有文章</span>
+      <button class="btn btn-outline btn-sm" onclick="refreshPosts()">🔄 刷新</button>
+    </div>
+    <div class="section-body" id="postList">
+      <div style="color:#888;text-align:center;padding:20px;">点击刷新加载文章列表...</div>
+    </div>
+  </div>
+
+  <!-- 日志 -->
+  <div class="section">
+    <div class="section-header">
+      <span>📋 运行日志</span>
+      <div class="flex">
+        <span id="serverStatus" style="font-size:12px;"><span class="status-dot stopped"></span>服务器已停止</span>
+        <button class="btn btn-outline btn-sm" onclick="clearLog()">清空</button>
+      </div>
+    </div>
+    <div class="section-body" style="padding:0;">
+      <div id="log">欢迎使用 Blog Manager 🎉</div>
+    </div>
+  </div>
+</div>
+
+<script>
+const API = '/api'
+let serverPort = 4000
+
+function log(msg, type = 'info') {
+  const el = document.getElementById('log')
+  const d = new Date()
+  const time = d.toLocaleTimeString()
+  el.innerHTML += `\n[${time}] <span class="${type}">${msg}</span>`
+  el.scrollTop = el.scrollHeight
+}
+
+function runCmd(cmd) {
+  switch(cmd) {
+    case 'deploy':
+      log('🚀 执行一键部署...', 'warn')
+      // 通过 fetch 调用本地 API
+      break
+    case 'build':
+      log('🔨 构建中...', 'warn')
+      break
+    case 'server':
+      log('🌐 启动本地服务器...', 'warn')
+      document.getElementById('serverStatus').innerHTML = '<span class="status-dot running"></span>服务器运行中 (端口 ' + serverPort + ')'
+      break
+    case 'stop':
+      log('⏹ 停止服务器', 'error')
+      document.getElementById('serverStatus').innerHTML = '<span class="status-dot stopped"></span>服务器已停止'
+      break
+    case 'preview':
+      window.open('http://localhost:' + serverPort + '/', '_blank')
+      log('👁 已打开预览窗口', 'info')
+      break
+  }
+}
+
+function newPost() {
+  const title = document.getElementById('postTitle').value.trim()
+  if (!title) {
+    log('❌ 请输入文章标题！', 'error')
+    return
+  }
+  const tags = document.getElementById('postTags').value.trim()
+  log(`📝 创建文章: ${title}`, 'warn')
+  document.getElementById('postTitle').value = ''
+  document.getElementById('postTags').value = ''
+}
+
+function refreshPosts() {
+  log('🔄 刷新文章列表...', 'info')
+  document.getElementById('postList').innerHTML = '<div style="color:#888;text-align:center;padding:20px;">文章列表将在此显示...</div>'
+}
+
+function clearLog() {
+  document.getElementById('log').innerHTML = '日志已清空 ✅'
+}
+
+// 检查服务器状态
+log('✅ Blog Manager 已加载', 'info')
+</script>
+</body>
+</html>
