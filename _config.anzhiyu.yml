@@ -16,6 +16,12 @@ social:
   GitHub: https://github.com/lyx919777 || anzhiyu-icon-github
   CSDN: https://blog.csdn.net/liu20120919 || anzhiyu-icon-csdn
 
+# KaTeX 数学公式渲染
+katex:
+  enable: true
+  per_page: true
+  hide_scrollbar: true
+
 # 首页顶部配置
 home_top:
   enable: true

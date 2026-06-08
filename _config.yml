@@ -90,6 +90,15 @@ ignore:
 ## Themes: https://hexo.io/themes/
 theme: anzhiyu
 
+# kramed 渲染器配置
+kramed:
+  gfm: true
+  pedantic: false
+  sanitize: false
+  tables: true
+  breaks: true
+  smartLists: true
+
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
