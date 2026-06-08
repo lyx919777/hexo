@@ -31,8 +31,8 @@ home_top:
       icon: anzhiyu-icon-code
     - name: 开发
       path: /categories/开发/
-      shadow: var(--anzhiyu-shadow-purple)
-      class: purple
+      shadow: var(--anzhiyu-shadow-red)
+      class: red
       icon: anzhiyu-icon-laptop-code
     - name: 生活
       path: /categories/生活/
