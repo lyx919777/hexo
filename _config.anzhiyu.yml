@@ -40,6 +40,11 @@ home_top:
       class: green
       icon: anzhiyu-icon-book
   default_descr: 欢迎来到 lyx919 的博客！
+  banner:
+    tips: 🔥 新项目
+    title: Hello World
+    image: https://bu.dusays.com/2023/05/13/645fa3cf90d70.webp
+    link: /2026/06/05/hello-world/
 
 # 作者信息
 author_status:
